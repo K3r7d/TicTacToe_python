@@ -46,7 +46,20 @@ class TicTacToeGUI:
         self.quit_button = tkinter.Button(self.main_window, text='Quit', command=self.main_window.destroy)
         self.quit_button.pack()
 
-        self.player_status : bool = False;
+        #out of source code add
+        self.play_button = tkinter.Button(self.main_window, text='Play', command=self.play_button_clicked)
+
+    def is_player_win(self):   
+        """
+        Checks if the player has won.
+        """
+        return self.check_win('X')
+    
+    def is_computer_win(self):
+        """
+        Checks if the computer has won.
+        """
+        return self.check_win('O')
 
     def is_empty_found(self):
         """

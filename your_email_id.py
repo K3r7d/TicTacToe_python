@@ -24,28 +24,42 @@ if answer == "n":
     quit(0)
 
 
+win_print = tkinter.Label(ttt.main_window, text="---Player win!---")
+lose_print = tkinter.Label(ttt.main_window, text="---Computer win!---")
+draw_print = tkinter.Label(ttt.main_window, text="---Draw!---")
+
 #start game
-ttt.play_button_clicked()
 while True:
 # Add your game loop code here.
-       
-    empty_slots_found : bool = ttt.is_empty_found()
-    if empty_slots_found == False:
-        ttt.draw()
-        ttt.update_gui()
-    
-    player_won : bool = ttt.is_player_won()
-    if player_won == True:
+    if(ttt.is_player_win()):
         ttt.increment_wins()
-        ttt.get_wins()
-        ttt.update_gui()
-        
-    computer_won : bool = ttt.is_computer_won() 
-    if computer_won == True:
-        ttt.increment_losses()
-        ttt.get_losses()
+        ttt.clear_slots()
+        win_print.pack()
         ttt.update_gui()
 
+    if(ttt.is_computer_win()):
+        ttt.increment_losses()
+        ttt.clear_slots()
+        lose_print.pack()
+        ttt.update_gui()
+
+    if(ttt.is_empty_found()):
+        ttt.draw()
+        draw_print.pack()
+        ttt.update_gui()
+
+    
+
+    ttt.register_click(ttt.c)
+    
+    
+
+    ttt.update_gui()
+
+    ttt.move_computer()
+
+    ttt.update_gui()
+        
     
     # Updates the GUI. DO NOT REMOVE OR MODIFY!
     try:
