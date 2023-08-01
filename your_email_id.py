@@ -1,4 +1,4 @@
-import TicTacToe_python.tic_tac_toe_gui as tic_tac_toe_gui
+import tic_tac_toe_gui 
 import tkinter
 
 # The object of the TicTacToeGUI class that renders the GUI.
@@ -23,32 +23,29 @@ if answer == "y":
 if answer == "n":
     quit(0)
 
-def check_win(slots,letter):
-    #hàng ngang
-    if slots[1] == letter and slots[2] == letter and slots[3] == letter:
-        return True
-    elif  slots[4] == letter and slots[5] == letter and slots[6] == letter:
-        return True
-    elif slots[7] == letter and slots[8] == letter and slots[9] == letter:
-        return True
-    #hàng dọc 
-    if slots[1] == letter and slots[4] == letter and slots[7] == letter:
-        return True
-    elif slots[2] == letter and slots[5] == letter and slots[8] == letter:
-        return True
-    elif slots[3] == letter and slots[6] == letter and slots[9] == letter:
-        return True
-    #duong cheo 
-    if slots[1] == letter and slots[5] == letter and slots[9] == letter:
-        return True
-    if slots[3] == letter and slots[5] == letter and slots[7] == letter:
-        return True
 
-    return False
-
-
+#start game
+ttt.play_button_clicked()
 while True:
 # Add your game loop code here.
+       
+    empty_slots_found : bool = ttt.is_empty_found()
+    if empty_slots_found == False:
+        ttt.draw()
+        ttt.update_gui()
+    
+    player_won : bool = ttt.is_player_won()
+    if player_won == True:
+        ttt.increment_wins()
+        ttt.get_wins()
+        ttt.update_gui()
+        
+    computer_won : bool = ttt.is_computer_won() 
+    if computer_won == True:
+        ttt.increment_losses()
+        ttt.get_losses()
+        ttt.update_gui()
+
     
     # Updates the GUI. DO NOT REMOVE OR MODIFY!
     try:

@@ -46,6 +46,39 @@ class TicTacToeGUI:
         self.quit_button = tkinter.Button(self.main_window, text='Quit', command=self.main_window.destroy)
         self.quit_button.pack()
 
+        self.player_status : bool = False;
+
+    def is_empty_found(self):
+        """
+        Checks if there are any empty squares.
+        """
+        for slot in self.slots:
+            if slot == '':
+                return True
+        return False
+
+    def check_win(self, letter):
+        """
+        Checks if the player or computer has won.
+        """
+        for i in range(0, 9, 3):
+            if self.slots[i] == self.slots[i + 1] == self.slots[i + 2] == letter:
+                return True
+
+        
+        for i in range(3):
+            if self.slots[i] == self.slots[i + 3] == self.slots[i + 6] == letter:
+                return True
+
+        
+        if self.slots[0] == self.slots[4] == self.slots[8] == letter:
+            return True
+        if self.slots[2] == self.slots[4] == self.slots[6] == letter:
+            return True
+
+        return False
+
+
     def create_title_bar(self):
         """
         Generates the top, title bar.
@@ -122,7 +155,7 @@ class TicTacToeGUI:
             self.player_turn = True
             self.slots[slot] = 'O'
 
-    def create_canvas(self):
+    def create_canvas(self) -> tkinter.Canvas:
         """
         Generates the drawing canvas for the play area.
         """
@@ -171,50 +204,50 @@ class TicTacToeGUI:
         self.c.destroy()
         self.c = self.create_canvas()
 
-    def get_wins(self):
+    def get_wins(self) -> int:
         """
         Returns the number of player wins.
         :return: Total player wins
         """
         return int(self.wins_str.get().split()[1])
 
-    def get_losses(self):
+    def get_losses(self) -> int:
         """
         Returns the number of player losses.
         :return: Total player losses
         """
         return int(self.losses_str.get().split()[1])
 
-def update_gui(self):
-        # Cập nhật giao diện ở đây với trạng thái hiện tại của lưới tic-tac-toe
-        for i, symbol in enumerate(self.slots):
-            if symbol == 'X':
-                self.c.create_line(self.grid_coords[str(i)][0] - 45,
-                                self.grid_coords[str(i)][1] - 45,
-                                self.grid_coords[str(i)][0] + 45,
-                                self.grid_coords[str(i)][1] + 45,
-                                width=4)
-                self.c.create_line(self.grid_coords[str(i)][0] + 45,
-                                self.grid_coords[str(i)][1] - 45,
-                                self.grid_coords[str(i)][0] - 45,
-                                self.grid_coords[str(i)][1] + 45,
-                                width=4)
-            elif symbol == 'O':
-                self.c.create_oval(self.grid_coords[str(i)][0] - 45,
-                                self.grid_coords[str(i)][1] - 45,
-                                self.grid_coords[str(i)][0] + 45,
-                                self.grid_coords[str(i)][1] + 45,
-                                width=4)
+    def update_gui(self):
+            # Cập nhật giao diện ở đây với trạng thái hiện tại của lưới tic-tac-toe
+            for i, symbol in enumerate(self.slots):
+                if symbol == 'X':
+                    self.c.create_line(self.grid_coords[str(i)][0] - 45,
+                                    self.grid_coords[str(i)][1] - 45,
+                                    self.grid_coords[str(i)][0] + 45,
+                                    self.grid_coords[str(i)][1] + 45,
+                                    width=4)
+                    self.c.create_line(self.grid_coords[str(i)][0] + 45,
+                                    self.grid_coords[str(i)][1] - 45,
+                                    self.grid_coords[str(i)][0] - 45,
+                                    self.grid_coords[str(i)][1] + 45,
+                                    width=4)
+                elif symbol == 'O':
+                    self.c.create_oval(self.grid_coords[str(i)][0] - 45,
+                                    self.grid_coords[str(i)][1] - 45,
+                                    self.grid_coords[str(i)][0] + 45,
+                                    self.grid_coords[str(i)][1] + 45,
+                                    width=4)
 
-def play_button_clicked(self):
-    player_won = False  # Assume the player did not win to demonstrate the code.
-    computer_won = False  # Assume the computer did not win to demonstrate the code.
+    def play_button_clicked(self):
+        player_won = False  # Assume the player did not win to demonstrate the code.
+        computer_won = False  # Assume the computer did not win to demonstrate the code.
 
-    if player_won:
-        self.increment_wins()
-    elif computer_won:
-        self.increment_losses()
-    else:
-        self.draw()
+        if player_won:
+            self.increment_wins()
+        elif computer_won:
+            self.increment_losses()
+        else:
+            self.draw()
 
-    self.update_gui()  # Update the GUI after each move
+        self.update_gui()  # Update the GUI after each move
