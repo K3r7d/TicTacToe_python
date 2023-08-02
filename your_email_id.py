@@ -1,64 +1,72 @@
-import tic_tac_toe_gui 
+import tic_tac_toe_gui as ttg
 import tkinter
 
 # The object of the TicTacToeGUI class that renders the GUI.
 # You can use this object to access the methods listed in the specification.
-
-
-# Main game loop.
-def display_details():
-        print("File      : tic_tac_toe.py")
-        print("Author    : Vy Dao Tuong Truong _ Kady ")
-        print("Student ID: 44661")
-        print("Email ID  : ")
-        print("This is my own work as defined by the University's Academic Misconduct Policy\n ")
-display_details()
-
-#enter player name
-answer = input("Would you like to play tic tac toe? (y/n): ")
-while answer != "y" and answer != "n": 
-    answer = input("Enter your answer again (y/n): ")
+ttg.display_details()
+    
+#start game
+answer = str(input("Would you like to play a game of Tic Tac Toe ? [y/n]: "))
+while answer != "y" and answer != "n":
+    answer = str(input("Would you like to play a game of Tic Tac Toe ? [y/n]: "))
 if answer == "y":
-    ttt = tic_tac_toe_gui.TicTacToeGUI(input("Enter Playername:"))
+    ttt = ttg.TicTacToeGUI(input("Enter your name: "))
 if answer == "n":
     quit(0)
 
-
-win_print = tkinter.Label(ttt.main_window, text="---Player win!---")
-lose_print = tkinter.Label(ttt.main_window, text="---Computer win!---")
-draw_print = tkinter.Label(ttt.main_window, text="---Draw!---")
-
-#start game
+game_has_ended = False
 while True:
 # Add your game loop code here.
-    if(ttt.is_player_win()):
-        ttt.increment_wins()
-        ttt.clear_slots()
-        win_print.pack()
+    if not game_has_ended:
+        print("---------------------- START GAME ----------------------")
+    while True:
+        if ttg.check_win(ttt.slots,'X'):
+            ttt.total_games += 1
+            ttt.player_wins += 1
+            print("--- Player wins! ---")
+            ttg.display_game(ttt.slots)
+            if(ttg.end_game() == "n"):
+                game_has_ended = True
+                ttg.display_static(ttt)
+                
+            ttt.increment_wins()
+            break
+        
+
+        if ttg.check_win(ttt.slots,'O'):
+            ttt.total_games += 1
+            ttt.computer_wins += 1
+            print("--- Computer wins! ---")
+            ttg.display_game(ttt.slots)
+            if(ttg.end_game() == "n"):
+                game_has_ended = True
+                ttg.display_static(ttt)
+                
+            ttt.increment_losses()
+            break
+
+
+        if not ttt.is_empty_found():
+            ttt.total_games += 1
+            ttt.draws += 1
+            print("--- Draw! ---")
+            ttg.display_game(ttt.slots)
+            if(ttg.end_game() == "n"):
+                game_has_ended = True
+                ttg.display_static(ttt)
+            ttt.draw()
+            break
+        
+
+        if ttt.player_turn == False:
+            ttg.move_computer(ttt)
+            ttt.player_turn = True
         ttt.update_gui()
 
-    if(ttt.is_computer_win()):
-        ttt.increment_losses()
-        ttt.clear_slots()
-        lose_print.pack()
-        ttt.update_gui()
-
-    if(not ttt.is_empty_found()):
-        ttt.draw()
-        draw_print.pack()
-        ttt.update_gui()
-
-    
-
-    
-    
-    
-
-    
     # Updates the GUI. DO NOT REMOVE OR MODIFY!
-    try:
-        ttt.main_window.update()
-    except (tkinter.TclError, KeyboardInterrupt):
-        quit(0)
+        try:
+            ttt.main_window.update()
+        except (tkinter.TclError, KeyboardInterrupt):
+            quit(0)
 
-    
+

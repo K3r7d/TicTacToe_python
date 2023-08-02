@@ -1,6 +1,65 @@
 import tkinter
 
+def check_win(slots : list[str],letter) -> bool:
+    if slots[0] == letter and slots[1] == letter and slots[2] == letter:
+        return True
+    elif slots[3] == letter and slots[4] == letter and slots[5] == letter:
+        return True
+    elif slots[6] == letter and slots[7] == letter and slots[8] == letter:
+        return True
+    elif slots[0] == letter and slots[3] == letter and slots[6] == letter:
+        return True
+    elif slots[1] == letter and slots[4] == letter and slots[7] == letter:
+        return True
+    elif slots[2] == letter and slots[5] == letter and slots[8] == letter:
+        return True
+    elif slots[0] == letter and slots[4] == letter and slots[8] == letter:
+        return True
+    elif slots[2] == letter and slots[4] == letter and slots[6] == letter:
+        return True
+    return False
 
+
+
+#function to end game
+def end_game() -> str:
+    print("----------------------- END GAME -----------------------")
+    print('\n')
+    print("That was fun!")
+    s = str(input(("Play again? [y/n]: ")))
+    while s != "y" and s != "n":
+        s = str(input(("Play again? [y/n]: ")))
+    return s
+    
+
+#display game
+def display_game(slot):
+    for i in range(3):
+        for j in range(3):
+            index = i * 3 + j
+            if slot[index] != "":
+                print(slot[index], end=" ")
+            else:
+                print(" ", end=" ")
+            if j < 2:
+                print("|", end=" ")
+        print()
+        if i < 2:
+            print("-" * 9)
+
+
+
+
+
+
+
+# Main game loop.
+def display_details():
+        print("File      : tic_tac_toe.py")
+        print("Author    : Vy Dao Tuong Truong _ Kady ")
+        print("Student ID: 44661")
+        print("Email ID  : ")
+        print("This is my own work as defined by the University's Academic Misconduct Policy\n ")
 class TicTacToeGUI:
     """
     Represents a graphical user interface for a Tic Tac Toe game.
@@ -22,6 +81,11 @@ class TicTacToeGUI:
         self.losses_str = tkinter.StringVar()              # Dynamically updating loss counter.
         self.losses_str.set('Losses: 0')
         self.player_turn = True                            # Switch for player or computer turn.
+        self.total_games = 0                              # Total games played.  
+
+        self.player_wins : int = 0                              # Total player wins.
+        self.computer_wins : int = 0                            # Total computer wins.
+        self.draws : int = 0                                    # Total draws.
 
         self.title_frame = tkinter.Frame(self.main_window)
         self.create_title_bar()
@@ -49,18 +113,6 @@ class TicTacToeGUI:
         #out of source code add
         self.play_button = tkinter.Button(self.main_window, text='Play', command=self.play_button_clicked)
 
-    def is_player_win(self):   
-        """
-        Checks if the player has won.
-        """
-        return self.check_win('X')
-    
-    def is_computer_win(self):
-        """
-        Checks if the computer has won.
-        """
-        return self.check_win('O')
-
     def is_empty_found(self) -> bool:
         """
         Checks if there are any empty squares.
@@ -68,27 +120,6 @@ class TicTacToeGUI:
         for slot in self.slots:
             if slot == '':
                 return True
-        return False
-
-    def check_win(self, letter):
-        """
-        Checks if the player or computer has won.
-        """
-        for i in range(0, 9, 3):
-            if self.slots[i] == self.slots[i + 1] == self.slots[i + 2] == letter:
-                return True
-
-        
-        for i in range(3):
-            if self.slots[i] == self.slots[i + 3] == self.slots[i + 6] == letter:
-                return True
-
-        
-        if self.slots[0] == self.slots[4] == self.slots[8] == letter:
-            return True
-        if self.slots[2] == self.slots[4] == self.slots[6] == letter:
-            return True
-
         return False
 
 
@@ -167,6 +198,61 @@ class TicTacToeGUI:
                                width=4)
             self.player_turn = True
             self.slots[slot] = 'O'
+
+    def is_empty(self, slot) -> bool:
+        """
+        Checks if the given slot is empty.
+        :param slot: The slot to check
+        :return: True if the slot is empty, False otherwise
+        """
+        return self.slots[slot] == ''
+    
+    def is_next_to_win(self, letter) -> int:
+        """
+        Checks if the given letter is next to win.
+        :param letter: The letter to check
+        :return: The slot that is next to win, -1 if no slot is next to win
+        """
+        for i in range(9):
+            if self.is_empty(i):
+                self.slots[i] = letter
+                if check_win(self.slots, letter):
+                    self.slots[i] = ''
+                    return i
+                else:
+                    self.slots[i] = ''
+        return -1
+
+    def conners_free(self) -> int:
+        """
+        Checks if the conners is free.
+        :return: The slot that is conners free, -1 if no slot is conners free
+        """
+        if self.is_empty(0):
+            return 0
+        elif self.is_empty(2):
+            return 2
+        elif self.is_empty(6):
+            return 6
+        elif self.is_empty(8):
+            return 8
+        return -1
+
+    def center_free(self) -> int:
+        if self.is_empty(4):
+            return 4
+        return -1
+
+    def random_move(self) -> int:
+        """
+        Checks if the random move is free.
+        :return: The slot that is random move free, -1 if no slot is random move free
+        """
+        import random
+        while True:
+            i = random.randint(0, 8)
+            if self.is_empty(i):
+                return i
 
     def create_canvas(self) -> tkinter.Canvas:
         """
@@ -264,3 +350,29 @@ class TicTacToeGUI:
             self.draw()
 
         self.update_gui()  # Update the GUI after each move
+
+
+#display static
+def display_static(ttt):
+    print("You played "+ str(ttt.total_games) +" games!")
+    print("-> Won: "+ str(ttt.player_wins))
+    print("-> Lost: "+ str(ttt.computer_wins))
+    print("-> Draw: "+ str(ttt.draws))
+    print('\n')
+    print("Thanks for playing!  :)")
+
+
+
+#computer move
+def move_computer(ttt):
+    if(ttt.is_next_to_win('O') != -1):
+        ttt.move_computer(ttt.is_next_to_win('O'))
+    elif(ttt.is_next_to_win('X') != -1):
+        ttt.move_computer(ttt.is_next_to_win('X'))
+    elif(ttt.conners_free() != -1):
+        ttt.move_computer(ttt.conners_free())
+    elif(ttt.center_free() != -1):
+        ttt.move_computer(ttt.center_free())
+    else:
+        ttt.move_computer(ttt.random_move())
+
