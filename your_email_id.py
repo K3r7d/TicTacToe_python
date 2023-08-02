@@ -43,23 +43,17 @@ while True:
         lose_print.pack()
         ttt.update_gui()
 
-    if(ttt.is_empty_found()):
+    if(not ttt.is_empty_found()):
         ttt.draw()
         draw_print.pack()
         ttt.update_gui()
 
     
 
-    ttt.register_click(ttt.c)
     
     
+    
 
-    ttt.update_gui()
-
-    ttt.move_computer()
-
-    ttt.update_gui()
-        
     
     # Updates the GUI. DO NOT REMOVE OR MODIFY!
     try:

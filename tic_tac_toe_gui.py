@@ -61,7 +61,7 @@ class TicTacToeGUI:
         """
         return self.check_win('O')
 
-    def is_empty_found(self):
+    def is_empty_found(self) -> bool:
         """
         Checks if there are any empty squares.
         """
