@@ -56,10 +56,9 @@ def display_game(slot):
 # Main game loop.
 def display_details():
         print("File      : tic_tac_toe.py")
-        print("Author    : Vy Dao Tuong Truong _ Kady ")
-        print("Student ID: 44661")
+        print("Author    : Pham Dinh Bao Duy ")
         print("Email ID  : ")
-        print("This is my own work as defined by the University's Academic Misconduct Policy\n ")
+        print('\n')
 class TicTacToeGUI:
     """
     Represents a graphical user interface for a Tic Tac Toe game.

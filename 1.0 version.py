@@ -28,6 +28,7 @@ while True:
             if(ttg.end_game() == "n"):
                 game_has_ended = True
                 ttg.display_static(ttt)
+                quit(0)
                 
             ttt.increment_wins()
             break
@@ -41,6 +42,7 @@ while True:
             if(ttg.end_game() == "n"):
                 game_has_ended = True
                 ttg.display_static(ttt)
+                quit(0)
                 
             ttt.increment_losses()
             break
@@ -54,6 +56,7 @@ while True:
             if(ttg.end_game() == "n"):
                 game_has_ended = True
                 ttg.display_static(ttt)
+                quit(0)
             ttt.draw()
             break
         
