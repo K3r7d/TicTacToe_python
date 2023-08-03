@@ -1,8 +1,6 @@
 import tic_tac_toe_gui as ttg
 import tkinter
 
-# The object of the TicTacToeGUI class that renders the GUI.
-# You can use this object to access the methods listed in the specification.
 ttg.display_details()
     
 #start game
@@ -66,7 +64,7 @@ while True:
             ttt.player_turn = True
         ttt.update_gui()
 
-    # Updates the GUI. DO NOT REMOVE OR MODIFY!
+    # Updates the GUI.
         try:
             ttt.main_window.update()
         except (tkinter.TclError, KeyboardInterrupt):
