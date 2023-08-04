@@ -21,6 +21,8 @@ def check_win(slots : list[str],letter) -> bool:
 
 
 
+
+
 #function to end game
 def end_game() -> str:
     print("----------------------- END GAME -----------------------")
@@ -72,7 +74,9 @@ class TicTacToeGUI:
         """
         # Create the main window widget.
         self.main_window = tkinter.Tk()
-
+        self.main_window.title('Tic Tac Toe')
+        self.main_window.geometry('500x500')
+        self.main_window.resizable(True, True)
         self.name = tkinter.StringVar()                    # Player's name.
         self.name.set('Name: ' + name)
         self.wins_str = tkinter.StringVar()                # Dynamically updating win counter.
@@ -101,6 +105,10 @@ class TicTacToeGUI:
             '7': (220, 370),
             '8': (370, 370)
         }
+
+        self.win_print = tkinter.Label(self.main_window, text="Player wins!")
+        self.lose_print = tkinter.Label(self.main_window, text="Computer wins!")
+        self.draw_print = tkinter.Label(self.main_window, text="Draw!")
 
         self.canvas_frame = tkinter.Frame(self.main_window)
         self.c = self.create_canvas()
@@ -336,6 +344,13 @@ class TicTacToeGUI:
                                     self.grid_coords[str(i)][0] + 45,
                                     self.grid_coords[str(i)][1] + 45,
                                     width=4)
+    
+
+    def forget_prints(self):
+        self.win_print.pack_forget()
+        self.lose_print.pack_forget()
+        self.draw_print.pack_forget()
+
 
     def play_button_clicked(self):
         player_won = False  # Assume the player did not win to demonstrate the code.
@@ -374,4 +389,5 @@ def move_computer(ttt):
         ttt.move_computer(ttt.center_free())
     else:
         ttt.move_computer(ttt.random_move())
+
 
