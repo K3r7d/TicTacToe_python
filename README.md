@@ -6,9 +6,6 @@ This is a small side project to learn tkinter in Python by implementing a classi
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 - Simple GUI using tkinter
